@@ -1,6 +1,6 @@
 const translation = {
   pageTitle: 'Oi, vamos começar!👋',
-  welcome: 'Bem-vindo ao Dify, faça login para continuar.',
+  welcome: 'Bem-vindo ao F3FX[IA], faça login para continuar.',
   email: 'Endereço de e-mail',
   emailPlaceholder: 'Seu e-mail',
   password: 'Senha',
@@ -19,7 +19,7 @@ const translation = {
   invitationCodePlaceholder: 'Seu código de convite',
   interfaceLanguage: 'Idioma da interface',
   timezone: 'Fuso horário',
-  go: 'Ir para o Dify',
+  go: 'Ir para o F3FX[IA]',
   sendUsMail: 'Envie-nos um e-mail com sua introdução e cuidaremos do pedido de convite.',
   acceptPP: 'Li e aceito a política de privacidade',
   reset: 'Execute o seguinte comando para redefinir sua senha',
