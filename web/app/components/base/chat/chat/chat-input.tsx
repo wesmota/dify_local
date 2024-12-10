@@ -148,7 +148,7 @@ const ChatInput: FC<ChatInputProps> = ({
       <div className='relative'>
         <div
           className={`
-            p-[5.5px] max-h-[150px] bg-white border-[1.5px] border-gray-200 rounded-xl overflow-y-auto
+            p-4 max-h-[150px] bg-gray-800 rounded-xl overflow-y-auto
             ${isDragActive && 'border-primary-600'} mb-2
           `}
         >
@@ -177,7 +177,8 @@ const ChatInput: FC<ChatInputProps> = ({
           }
           <Textarea
             className={`
-              block w-full px-2 pr-[118px] py-[7px] leading-5 max-h-none text-sm text-gray-700 outline-none appearance-none resize-none
+              block w-full px-2 pr-[118px] py-[7px] leading-5 max-h-none text-sm text-gray-200 outline-none appearance-none resize-none
+              bg-gray-800 placeholder-gray-400
               ${visionConfig?.enabled && 'pl-12'}
             `}
             value={query}
