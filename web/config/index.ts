@@ -247,3 +247,14 @@ Thought: {{agent_scratchpad}}
 export const VAR_REGEX = /\{\{(#[a-zA-Z0-9_-]{1,50}(\.[a-zA-Z_][a-zA-Z0-9_]{0,29}){1,10}#)\}\}/gi
 
 export const TEXT_GENERATION_TIMEOUT_MS = 60000
+
+export const API_CONFIG = {
+  BASE_URL: 'http://145.223.121.2:8181/api',
+  endpoints: {
+    login: '/auth/login',
+    validateToken: '/auth/validate',
+  },
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
