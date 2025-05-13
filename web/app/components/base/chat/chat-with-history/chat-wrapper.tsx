@@ -14,6 +14,18 @@ import {
   stopChatMessageResponding,
 } from '@/service/share'
 
+// Função para formatar a data no formato desejado para o nome da conversa
+const formatDateForConversationName = () => {
+  const now = new Date()
+  const day = String(now.getDate()).padStart(2, '0')
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const year = now.getFullYear()
+  const hours = String(now.getHours()).padStart(2, '0')
+  const minutes = String(now.getMinutes()).padStart(2, '0')
+
+  return `${day}/${month}/${year} ${hours}:${minutes}`
+}
+
 const ChatWrapper = () => {
   const {
     appParams,
@@ -68,6 +80,10 @@ const ChatWrapper = () => {
       inputs: currentConversationId ? currentConversationItem?.inputs : newConversationInputs,
       conversation_id: currentConversationId,
     }
+
+    // Adicionar nome personalizado para novas conversas
+    if (!currentConversationId)
+      data.new_conversation_name = `Requisição TR- ${formatDateForConversationName()}`
 
     if (appConfig?.file_upload?.image.enabled && files?.length)
       data.files = files

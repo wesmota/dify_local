@@ -38,6 +38,18 @@ import { addFileInfos, sortAgentSorts } from '@/app/components/tools/utils'
 import { useToastContext } from '@/app/components/base/toast'
 import { changeLanguage } from '@/i18n/i18next-config'
 
+// Função para formatar a data no formato desejado para o nome da conversa
+const formatDateForConversationName = () => {
+  const now = new Date()
+  const day = String(now.getDate()).padStart(2, '0')
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const year = now.getFullYear()
+  const hours = String(now.getHours()).padStart(2, '0')
+  const minutes = String(now.getMinutes()).padStart(2, '0')
+
+  return `${day}/${month}/${year} ${hours}:${minutes}`
+}
+
 export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   const isInstalledApp = useMemo(() => !!installedAppInfo, [installedAppInfo])
   const { data: appInfo, isLoading: appInfoLoading, error: appInfoError } = useSWR(installedAppInfo ? null : 'appInfo', fetchAppInfo)
@@ -183,13 +195,13 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     if (showNewConversationItemInList && data[0]?.id !== '') {
       data.unshift({
         id: '',
-        name: t('share.chat.newChatDefaultName'),
+        name: `Requisição TR- ${formatDateForConversationName()}`,
         inputs: {},
         introduction: '',
       })
     }
     return data
-  }, [originConversationList, showNewConversationItemInList, t])
+  }, [originConversationList, showNewConversationItemInList])
 
   useEffect(() => {
     if (newConversation) {
