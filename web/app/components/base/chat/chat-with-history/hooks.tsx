@@ -137,6 +137,9 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
 
   const [showNewConversationItemInList, setShowNewConversationItemInList] = useState(false)
 
+  // Adicionamos um estado para armazenar o timestamp da última vez que uma nova conversa foi iniciada
+  const [newConversationTimestamp, setNewConversationTimestamp] = useState(Date.now())
+
   const pinnedConversationList = useMemo(() => {
     return appPinnedConversationData?.data || []
   }, [appPinnedConversationData])
@@ -183,7 +186,14 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     handleNewConversationInputsChange(conversationInputs)
   }, [handleNewConversationInputsChange, inputsForms])
 
-  const { data: newConversation } = useSWR(newConversationId ? [isInstalledApp, appId, newConversationId] : null, () => generationConversationName(isInstalledApp, appId, newConversationId), { revalidateOnFocus: false })
+  const { data: newConversation } = useSWR(
+    newConversationId ? [isInstalledApp, appId, newConversationId] : null,
+    () => {
+      const dynamicName = `${appData?.site.title || 'Conversa'}- ${formatDateForConversationName()}`
+      return generationConversationName(isInstalledApp, appId, newConversationId, dynamicName)
+    },
+    { revalidateOnFocus: false },
+  )
   const [originConversationList, setOriginConversationList] = useState<ConversationItem[]>([])
   useEffect(() => {
     if (appConversationData?.data && !appConversationDataLoading)
@@ -193,15 +203,17 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     const data = originConversationList.slice()
 
     if (showNewConversationItemInList && data[0]?.id !== '') {
+      // Usar o timestamp para garantir que um novo nome seja gerado cada vez
+      // que o usuário clica em "Nova conversa"
       data.unshift({
         id: '',
-        name: `Requisição TR- ${formatDateForConversationName()}`,
+        name: `${appData?.site.title || 'Conversa'}- ${formatDateForConversationName()}`,
         inputs: {},
         introduction: '',
       })
     }
     return data
-  }, [originConversationList, showNewConversationItemInList])
+  }, [originConversationList, showNewConversationItemInList, newConversationTimestamp, appData])
 
   useEffect(() => {
     if (newConversation) {
@@ -266,6 +278,9 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   const handleNewConversation = useCallback(() => {
     currentChatInstanceRef.current.handleStop()
     setNewConversationId('')
+
+    // Atualizar o timestamp para forçar a geração de um novo nome de conversa
+    setNewConversationTimestamp(Date.now())
 
     if (showNewConversationItemInList) {
       handleChangeConversation('')

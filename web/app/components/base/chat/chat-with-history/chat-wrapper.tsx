@@ -82,8 +82,11 @@ const ChatWrapper = () => {
     }
 
     // Adicionar nome personalizado para novas conversas
-    if (!currentConversationId)
-      data.new_conversation_name = `Requisição TR- ${formatDateForConversationName()}`
+    if (!currentConversationId) {
+      // Gerar o nome dinamicamente no momento do envio
+      const customName = `Requisição TR- ${formatDateForConversationName()}`
+      data.new_conversation_name = customName
+    }
 
     if (appConfig?.file_upload?.image.enabled && files?.length)
       data.files = files

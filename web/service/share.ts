@@ -126,7 +126,10 @@ export const renameConversation = async (isInstalledApp: boolean, installedAppId
   return getAction('post', isInstalledApp)(getUrl(`conversations/${id}/name`, isInstalledApp, installedAppId), { body: { name } })
 }
 
-export const generationConversationName = async (isInstalledApp: boolean, installedAppId = '', id: string) => {
+export const generationConversationName = async (isInstalledApp: boolean, installedAppId = '', id: string, customName?: string) => {
+  if (customName)
+    return getAction('post', isInstalledApp)(getUrl(`conversations/${id}/name`, isInstalledApp, installedAppId), { body: { name: customName } }) as Promise<ConversationItem>
+
   return getAction('post', isInstalledApp)(getUrl(`conversations/${id}/name`, isInstalledApp, installedAppId), { body: { auto_generate: true } }) as Promise<ConversationItem>
 }
 
