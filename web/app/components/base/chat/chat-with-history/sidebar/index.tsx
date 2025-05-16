@@ -64,12 +64,28 @@ const Sidebar = () => {
       {
         !isMobile && (
           <div className='shrink-0 flex p-4'>
-            <AppIcon
-              className='mr-3'
-              size='small'
-              icon={appData?.site.icon}
-              background={appData?.site.icon_background}
-            />
+            {(() => {
+              // Verificar se o título contém "Espeleologia"
+              const isEspeleologiaAgent = appData?.site.title ? appData.site.title.includes('Espeleologia') : false
+
+              if (isEspeleologiaAgent) {
+                return (
+                  <div className='mr-3 flex items-center justify-center w-8 h-8 rounded-lg' style={{ background: appData?.site.icon_background || '#F5F5F5' }}>
+                    <span className='text-lg'>🔦</span>
+                  </div>
+                )
+              }
+              else {
+                return (
+                  <AppIcon
+                    className='mr-3'
+                    size='small'
+                    icon={appData?.site.icon}
+                    background={appData?.site.icon_background}
+                  />
+                )
+              }
+            })()}
             <div className='py-1 text-base font-semibold text-gray-800'>
               {appData?.site.title}
             </div>
@@ -88,11 +104,11 @@ const Sidebar = () => {
       </div>
       <div className='grow px-4 py-2 overflow-y-auto'>
         {
-          !!pinnedConversationList.length && (
+          (!!pinnedConversationList.length) && (
             <div className='mb-4'>
               <List
                 isPin
-                title={t('share.chat.pinnedTitle') || ''}
+                title={(t('share.chat.pinnedTitle') || '')}
                 list={pinnedConversationList}
                 onChangeConversation={handleChangeConversation}
                 onOperate={handleOperate}
@@ -102,7 +118,7 @@ const Sidebar = () => {
           )
         }
         {
-          !!conversationList.length && (
+          (!!conversationList.length) && (
             <List
               title={(pinnedConversationList.length && t('share.chat.unpinnedTitle')) || ''}
               list={conversationList}
@@ -114,12 +130,12 @@ const Sidebar = () => {
         }
       </div>
       <div className='px-4 pb-4 text-xs text-gray-400'>
-        © {appData?.site.copyright || appData?.site.title} {(new Date()).getFullYear()}
+        {(appData?.site.copyright || appData?.site.title)} {(new Date()).getFullYear()}
       </div>
       {!!showConfirm && (
         <Confirm
           title={t('share.chat.deleteConversation.title')}
-          content={t('share.chat.deleteConversation.content') || ''}
+          content={(t('share.chat.deleteConversation.content') || '')}
           isShow
           onCancel={handleCancelConfirm}
           onConfirm={handleDelete}
@@ -130,7 +146,7 @@ const Sidebar = () => {
           isShow
           onClose={handleCancelRename}
           saveLoading={conversationRenaming}
-          name={showRename?.name || ''}
+          name={(showRename?.name || '')}
           onSave={handleRename}
         />
       )}
