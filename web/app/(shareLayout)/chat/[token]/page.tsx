@@ -77,67 +77,108 @@ const LoginForm = ({ onLogin }) => {
         'bg-cover bg-center',
       )}
       style={{
-        backgroundImage: 'url(\'/logo/fundo_agente_2.png\')', // Caminho da nova imagem de fundo
+        backgroundImage: 'url(\'/logo/caverna_background.jpeg\')', // Corrigido para a extensão .jpeg
+        backgroundColor: '#121212', // Cor de fallback escura
       }}
     >
-      {/* Contêiner do formulário */}
-      <div
-        className={cn(
-          'relative flex items-center justify-center w-screen h-screen',
-          'bg-cover bg-center',
-        )}
-        style={{
-          backgroundImage: 'url(\'/logo/fundo_agente_2.png\')', // Caminho da nova imagem de fundo
-        }}
-      >
-        {/* Contêiner do formulário */}
-        <div className="absolute w-full h-full flex flex-col items-center justify-center">
-          <form className="relative w-full max-w-[1000px] h-[300px] flex justify-between items-center">
+      {/* Overlay escuro para melhorar legibilidade */}
+      <div className="absolute inset-0 bg-black/50"></div>
+
+      {/* Contêiner principal */}
+      <div className="relative z-10 w-full max-w-[1000px] mx-auto px-4">
+        {/* Formulário de login estilizado */}
+        <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-10 shadow-2xl border border-slate-700/50 max-w-[480px] mx-auto">
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-white tracking-tight mb-2">Acesso ao Sistema</h2>
+            <div className="h-1 w-12 bg-blue-500 rounded-full"></div>
+          </div>
+
+          <form className="space-y-7">
             {/* Campo de Usuário */}
-            <div className="absolute left-[-3%] top-[69%] w-[44%]">
-              <label htmlFor="email" className="block text-white text-md font-medium mb-1">
+            <div>
+              <label htmlFor="email" className="block text-slate-300 text-sm font-medium mb-2">
                 Usuário
               </label>
-              <input
-                id="email"
-                type="text"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Digite seu usuário"
-                className="w-full px-4 py-2 text-white placeholder-white rounded bg-transparent border-none focus:outline-none"
-                disabled={isLoading}
-              />
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <input
+                  id="email"
+                  type="text"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Digite seu usuário"
+                  className="w-full pl-12 pr-4 py-3.5 text-white bg-slate-800/90 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-500 text-sm"
+                  disabled={isLoading}
+                />
+              </div>
             </div>
 
             {/* Campo de Senha */}
-            <div className="absolute right-[-2%] top-[69%] w-[44%]">
-              <label htmlFor="password" className="block text-white text-md font-medium mb-1">
+            <div>
+              <label htmlFor="password" className="block text-slate-300 text-sm font-medium mb-2">
                 Senha
               </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="Digite sua senha"
-                className="w-full px-4 py-2 text-white placeholder-white rounded bg-transparent border-none focus:outline-none"
-                disabled={isLoading}
-              />
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Digite sua senha"
+                  className="w-full pl-12 pr-4 py-3.5 text-white bg-slate-800/90 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-500 text-sm"
+                  disabled={isLoading}
+                />
+              </div>
             </div>
 
             {/* Botão Entrar */}
-            <div className="absolute bottom-[-10%] left-[50%] -translate-x-1/2 w-[20%]">
+            <div className="pt-2">
               <Button
                 type="button"
                 variant="primary"
-                className="w-full bg-white/80 text-blue-900 py-2 rounded hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3.5 rounded-lg transition-all duration-200 font-medium text-sm shadow-lg"
                 onClick={handleSubmit}
                 disabled={isLoading}
               >
-                {isLoading ? 'Entrando...' : 'Entrar'}
+                {isLoading
+                  ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    Autenticando...
+                    </>
+                  )
+                  : (
+                    <>
+                    Entrar
+                    </>
+                  )}
               </Button>
             </div>
           </form>
+
+          {/* Rodapé do formulário */}
+          <div className="mt-10 pt-6 border-t border-slate-700/30 text-center text-slate-400 text-xs">
+            <p>Agente Inteligente de Espeleologia - TR</p>
+            <div className="flex justify-center space-x-4 mt-2">
+              <span title="Exploração">🧗</span>
+              <span title="Caverna">🪨</span>
+              <span title="Lanterna">🔦</span>
+              <span title="Mapa">🗺️</span>
+              <span title="Bússola">🧭</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
